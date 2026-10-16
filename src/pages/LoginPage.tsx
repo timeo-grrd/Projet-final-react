@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router';
 import { useAuth } from '../context/AuthContext';
-import { COMPTES_INITIAUX } from '../data/donnees-initiales';
+import { COMPTES_INITIAUX, type Role } from '../data/donnees-initiales';
 
 export function LoginPage() {
   const { login } = useAuth();
@@ -9,12 +9,21 @@ export function LoginPage() {
 
   // Page demandée avant la redirection (bonus "retour à la destination")
   const from: unknown = location.state?.from;
-  const destination =
-    typeof from === 'string' && from.startsWith('/') && from !== '/login' ? from : '/catalogue';
+
+  // Le retour ne donne aucun droit : si la page demandée n'est pas
+  // accessible avec ce rôle (ex. /gestion pour un étudiant), on va au catalogue.
+  function destinationPour(role: Role): string {
+    if (typeof from !== 'string' || !from.startsWith('/') || from === '/login') return '/catalogue';
+    if (from.startsWith('/gestion') && role !== 'manager') return '/catalogue';
+    if (from.startsWith('/mes-reservations') && role !== 'student') return '/catalogue';
+    return from;
+  }
 
   function seConnecter(compteId: number) {
-    login(compteId);
-    navigate(destination, { replace: true });
+    const compte = COMPTES_INITIAUX.find(c => c.id === compteId);
+    if (!compte) return;
+    login(compte.id);
+    navigate(destinationPour(compte.role), { replace: true });
   }
 
   return (
