@@ -9,7 +9,7 @@ export function EquipementCard({ equipement, disponible }: Props) {
         <h2>{equipement.nom}</h2>
         <p>{equipement.categorie}</p>
         <p>{equipement.localisation}</p>
-        <span className={disponible ? 'badge disponible' : 'badge reservé'}>
+        <span className={disponible ? 'badge disponible' : 'badge reserve'}>
           {disponible ? 'Disponible' : 'Réservé'}
         </span>
         <Link to={`/materiels/${equipement.id}`}>Voir la fiche</Link>
