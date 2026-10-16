@@ -34,47 +34,50 @@ export function MaterielDetailPage() {
 
   return (
     <>
-      <h1>{equipement.nom}</h1>
-      <p><strong>Catégorie :</strong> {equipement.categorie}</p>
-      <p><strong>Description :</strong> {equipement.description}</p>
-      <p><strong>Localisation :</strong> {equipement.localisation}</p>
-      <p>
-        <strong>État :</strong>{' '}
+      <p><Link to="/catalogue">Retour au catalogue</Link></p>
+
+      <article className="fiche">
+        <p className="numero">N° {equipement.id}</p>
+        <h1>{equipement.nom}</h1>
         <span className={disponible ? 'badge disponible' : 'badge reserve'}>
           {disponible ? 'Disponible' : 'Réservé'}
         </span>
-      </p>
 
-      {user?.role === 'student' && (
-        <section aria-label="Réservation">
-          {disponible && (
-            <button type="button" onClick={handleReserver}>Réserver</button>
-          )}
-          {reserveParMoi && (
-            <p>
-              Vous avez réservé cet équipement.{' '}
-              <Link to="/mes-reservations">Voir mes réservations</Link>
-            </p>
-          )}
-          {!disponible && !reserveParMoi && (
-            <>
-              <button type="button" disabled>Réserver</button>
-              <p>Cet équipement est déjà réservé par un autre étudiant.</p>
-            </>
-          )}
-        </section>
-      )}
+        <dl>
+          <dt>Catégorie</dt><dd>{equipement.categorie}</dd>
+          <dt>Description</dt><dd>{equipement.description}</dd>
+          <dt>Localisation</dt><dd>{equipement.localisation}</dd>
+        </dl>
 
-      {user?.role === 'manager' && (
-        <p>
-          La réservation est réservée aux étudiants.{' '}
-          <Link to={`/gestion/${equipement.id}/modifier`}>Modifier cette fiche</Link>
-        </p>
-      )}
+        {user?.role === 'student' && (
+          <section aria-label="Réservation">
+            {disponible && (
+              <button type="button" onClick={handleReserver}>Réserver</button>
+            )}
+            {reserveParMoi && (
+              <p>
+                Vous avez réservé cet équipement.{' '}
+                <Link to="/mes-reservations">Voir mes réservations</Link>
+              </p>
+            )}
+            {!disponible && !reserveParMoi && (
+              <>
+                <button type="button" disabled>Réserver</button>
+                <p>Cet équipement est déjà réservé par un autre étudiant.</p>
+              </>
+            )}
+          </section>
+        )}
 
-      {message && <p role="status">{message}</p>}
+        {user?.role === 'manager' && (
+          <p>
+            La réservation est réservée aux étudiants.{' '}
+            <Link to={`/gestion/${equipement.id}/modifier`}>Modifier cette fiche</Link>
+          </p>
+        )}
 
-      <p><Link to="/catalogue">Retour au catalogue</Link></p>
+        {message && <p role="status">{message}</p>}
+      </article>
     </>
   );
 }

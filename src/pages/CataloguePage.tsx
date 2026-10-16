@@ -25,7 +25,9 @@ export function CataloguePage() {
       {resultats.length === 0 ? (
         <p role="status">Aucun équipement ne correspond à vos critères.</p>
       ) : (
-        resultats.map(e => <EquipementCard key={e.id} equipement={e} disponible={estDisponible(e.id)} />)
+        <div className="grille">
+          {resultats.map(e => <EquipementCard key={e.id} equipement={e} disponible={estDisponible(e.id)} />)}
+        </div>
       )}
     </>
   );

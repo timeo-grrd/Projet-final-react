@@ -21,11 +21,23 @@ export function LoginPage() {
     <>
       <h1>Connexion</h1>
       <p>Choisissez un compte de démonstration (connexion simulée, sans mot de passe).</p>
-      {COMPTES_INITIAUX.map(c => (
-        <button key={c.id} onClick={() => seConnecter(c.id)}>
-          Se connecter en tant que {c.nom} ({c.role}) 
-        </button>
-      ))}
+      <div className="badges">
+        {COMPTES_INITIAUX.map(c => (
+          <button
+            key={c.id}
+            type="button"
+            className={`carte-acces ${c.role}`}
+            onClick={() => seConnecter(c.id)}
+            aria-label={`Se connecter en tant que ${c.nom}`}
+          >
+            <span className="initiales" aria-hidden="true">
+              {c.nom.split(' ').map(mot => mot[0]).join('')}
+            </span>
+            <span className="nom">{c.nom}</span>
+            <span className="role">{c.role === 'student' ? 'Étudiant' : 'Responsable'}</span>
+          </button>
+        ))}
+      </div>
     </>
   );
 }

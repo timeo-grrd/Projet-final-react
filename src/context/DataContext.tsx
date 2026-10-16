@@ -40,12 +40,16 @@ export function DataProvider({ children }: { children: ReactNode }) {
   // 3. Sauvegarde automatique à chaque changement
   useEffect(() => {
     if (!ecrireTableau('cm-equipements', equipements)) {
+      // Signaler l'échec d'écriture (système externe) : setState volontaire dans l'effet
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setErreurStockage("Impossible d'enregistrer le catalogue.");
     }
   }, [equipements]);
 
   useEffect(() => {
     if (!ecrireTableau('cm-reservations', reservations)) {
+      // Signaler l'échec d'écriture (système externe) : setState volontaire dans l'effet
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setErreurStockage("Impossible d'enregistrer les réservations.");
     }
   }, [reservations]);
@@ -95,6 +99,8 @@ export function DataProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// Le hook est exporté avec son Provider (même modèle que les slides J4 p.35)
+// eslint-disable-next-line react-refresh/only-export-components
 export function useData() {
   const ctx = useContext(DataContext);
   if (!ctx) throw new Error('useData doit être utilisé dans DataProvider');

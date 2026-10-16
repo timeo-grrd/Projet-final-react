@@ -52,6 +52,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// Le hook est exporté avec son Provider (même modèle que les slides J4 p.35)
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error('useAuth doit être utilisé dans AuthProvider');

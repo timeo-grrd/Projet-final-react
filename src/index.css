@@ -1,4 +1,235 @@
-nav { display: flex; gap: 1rem; padding: 1rem; }
-nav a.active { font-weight: bold; text-decoration: underline; }
-main { padding: 1rem; }
-.erreur { color: #b00020; margin: 0.25rem 0 0; }
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap');
+
+/* ── Palette : une réserve de matériel ─────────────────────── */
+:root {
+  --mur: #e3e8e0;        /* mur de l'atelier */
+  --panneau: #b7c1b1;    /* panneau perforé */
+  --trou: #8d9789;
+  --etiquette: #ecdcab;  /* étiquette kraft */
+  --graphite: #263036;   /* texte */
+  --rail: #2f383e;       /* barre de menu, acier */
+  --encre-bleue: #24479a;
+  --encre-rouge: #b3261e;
+  --oeillet: #9aa3a8;
+
+  font-family: 'Archivo', system-ui, sans-serif;
+  font-stretch: 100%;
+  color: var(--graphite);
+  background: var(--mur);
+  line-height: 1.55;
+}
+body { margin: 0; }
+
+/* ── Titres : larges, comme une signalétique d'atelier ─────── */
+h1 {
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  line-height: 1.1;
+  margin: 1.5rem 0 1rem;
+}
+h2 { font-stretch: 112%; font-weight: 700; }
+
+/* ── Menu : un rail d'acier, le lien actif est une étiquette ─ */
+header { background: var(--rail); }
+nav {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.25rem;
+  max-width: 1040px; margin: 0 auto; padding: 0.75rem 1rem;
+}
+nav a, nav span { color: #eef1ec; text-decoration: none; }
+nav a { padding: 0.2rem 0.7rem; border-radius: 3px; }
+nav a:hover { text-decoration: underline; }
+nav a.active {
+  background: var(--etiquette); color: var(--graphite);
+  font-weight: 700; text-decoration: none;
+}
+nav span { margin-left: auto; opacity: 0.8; }
+nav button { background: transparent; border-color: #eef1ec; color: #eef1ec; }
+
+main { max-width: 1040px; margin: 0 auto; padding: 0 1rem 3rem; }
+main > p, main > section { max-width: 65ch; }
+
+/* ── Filtres ───────────────────────────────────────────────── */
+.filtres { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; margin-bottom: 1.25rem; }
+
+/* ── Le catalogue : un panneau perforé ─────────────────────── */
+.grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 2rem 1.5rem;
+  padding: 2.5rem 1.5rem 2rem;
+  border-radius: 6px;
+  background-color: var(--panneau);
+  background-image: radial-gradient(circle, var(--trou) 2.5px, transparent 3px);
+  background-size: 26px 26px;
+}
+
+/* Chaque équipement est une étiquette d'inventaire suspendue */
+.carte {
+  position: relative;
+  background: var(--etiquette);
+  padding: 2.4rem 1.1rem 1.1rem;
+  border-radius: 4px 4px 10px 10px;
+  clip-path: polygon(18% 0, 82% 0, 100% 14%, 100% 100%, 0 100%, 0 14%);
+  transform: rotate(-1.2deg);
+}
+.carte:nth-child(even) { transform: rotate(1.4deg); }
+.carte:nth-child(3n) { transform: rotate(-0.4deg); }
+/* l'œillet */
+.carte::before {
+  content: '';
+  position: absolute; top: 0.7rem; left: 50%;
+  width: 14px; height: 14px; margin-left: -7px;
+  border-radius: 50%;
+  background: var(--panneau);
+  box-shadow: 0 0 0 3px var(--oeillet);
+}
+.carte h2 { margin: 0 0 0.35rem; font-size: 1.15rem; line-height: 1.2; }
+.carte p { margin: 0; }
+.carte .numero { font-stretch: 75%; font-weight: 600; opacity: 0.7; }
+.carte a { display: block; width: fit-content; margin-top: 0.8rem; color: var(--graphite); font-weight: 700; }
+.carte .badge { margin-top: 0.8rem; font-size: 0.95rem; }
+
+/* ── Le tampon : disponible / réservé ──────────────────────── */
+.badge {
+  display: inline-block;
+  font-stretch: 75%; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.85rem;
+  padding: 0.05rem 0.45rem;
+  border: 3px double currentColor;
+  border-radius: 4px;
+  transform: rotate(-9deg);
+  opacity: 0.88;
+}
+.badge.disponible { color: var(--encre-bleue); animation: tampon-bleu 220ms ease-out; }
+.badge.reserve { color: var(--encre-rouge); animation: tampon-rouge 220ms ease-out; }
+@keyframes tampon-bleu  { from { transform: rotate(-9deg) scale(1.6); opacity: 0; } }
+@keyframes tampon-rouge { from { transform: rotate(-9deg) scale(1.6); opacity: 0; } }
+
+/* ── Boutons et champs ─────────────────────────────────────── */
+button {
+  font: inherit; font-weight: 700;
+  padding: 0.45rem 1rem;
+  border: 2px solid var(--encre-bleue); border-radius: 4px;
+  background: var(--encre-bleue); color: #fff;
+  cursor: pointer;
+}
+button:disabled { background: transparent; color: var(--graphite); border-color: var(--trou); opacity: 0.6; cursor: not-allowed; }
+main > button { display: block; margin-bottom: 0.6rem; }
+
+input, select, textarea {
+  font: inherit;
+  padding: 0.45rem 0.6rem;
+  border: 2px solid var(--trou); border-radius: 4px;
+  background: #fbfaf5; color: var(--graphite);
+}
+textarea { min-height: 6rem; }
+form { background: var(--etiquette); padding: 1.5rem; border-radius: 6px; max-width: 520px; }
+form div { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1rem; }
+form label { font-weight: 700; }
+[aria-invalid="true"] { border-color: var(--encre-rouge); }
+.erreur { color: var(--encre-rouge); font-weight: 600; margin: 0; }
+
+/* ── Tableau de gestion ────────────────────────────────────── */
+table { width: 100%; border-collapse: collapse; background: #fbfaf5; }
+th { text-align: left; background: var(--rail); color: #eef1ec; font-stretch: 112%; }
+th, td { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--panneau); }
+td a { margin-right: 0.75rem; color: var(--encre-bleue); font-weight: 700; }
+
+/* ── Messages ──────────────────────────────────────────────── */
+[role="alert"] { border-left: 6px solid var(--encre-rouge); background: #fbfaf5; padding: 0.75rem 1rem; }
+[role="status"] { border-left: 6px solid var(--encre-bleue); background: #fbfaf5; padding: 0.75rem 1rem; }
+
+/* ── Accessibilité ─────────────────────────────────────────── */
+:focus-visible { outline: 3px solid var(--encre-bleue); outline-offset: 3px; }
+nav :focus-visible { outline-color: var(--etiquette); }
+@media (prefers-reduced-motion: reduce) {
+  .badge { animation: none !important; }
+}
+/* ══ Améliorations ═══════════════════════════════════════════ */
+
+/* ── L'enseigne : une bande d'étiqueteuse (type Dymo) ──────── */
+.enseigne {
+  display: inline-block;
+  background: var(--encre-rouge);
+  color: #fff;
+  font-stretch: 112%; font-weight: 800;
+  letter-spacing: 0.12em;
+  padding: 0.15rem 0.7rem;
+  border-radius: 2px;
+  transform: rotate(-1.5deg);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35), 0 -1px 0 rgba(255, 255, 255, 0.25);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+  margin-right: 0.5rem;
+}
+
+/* ── Connexion : des badges d'accès à choisir ──────────────── */
+.badges { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem; }
+.carte-acces {
+  position: relative;
+  width: 200px;
+  display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+  padding: 2.6rem 1rem 1.2rem;
+  background: #fbfaf5; color: var(--graphite);
+  border: 2px solid var(--trou); border-radius: 12px;
+  border-top: 14px solid var(--encre-bleue);
+  text-align: center;
+}
+.carte-acces.manager { border-top-color: var(--rail); }
+.carte-acces::before {            /* la fente du cordon */
+  content: '';
+  position: absolute; top: 0.6rem; left: 50%;
+  width: 46px; height: 8px; margin-left: -23px;
+  border-radius: 4px;
+  background: var(--mur);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+.carte-acces .initiales {
+  display: grid; place-items: center;
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--etiquette);
+  font-stretch: 125%; font-weight: 800; font-size: 1.4rem;
+}
+.carte-acces .nom { font-weight: 700; font-size: 1.05rem; }
+.carte-acces .role { font-weight: 400; opacity: 0.75; }
+.carte-acces:hover { border-color: var(--encre-bleue); }
+
+/* ── Fiche détaillée : une grande étiquette ────────────────── */
+.fiche {
+  position: relative;
+  max-width: 620px;
+  margin-top: 1.5rem;
+  padding: 3rem 2rem 2rem;
+  background: var(--etiquette);
+  clip-path: polygon(10% 0, 90% 0, 100% 9%, 100% 100%, 0 100%, 0 9%);
+}
+.fiche::before {
+  content: '';
+  position: absolute; top: 1rem; left: 50%;
+  width: 18px; height: 18px; margin-left: -9px;
+  border-radius: 50%;
+  background: var(--mur);
+  box-shadow: 0 0 0 4px var(--oeillet);
+}
+.fiche h1 { margin-top: 0.25rem; margin-right: 9rem; }
+.fiche .numero { margin: 0; font-stretch: 75%; font-weight: 600; opacity: 0.7; }
+.fiche dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.4rem 1.25rem; margin: 1.25rem 0; }
+.fiche dt { font-weight: 700; }
+.fiche dd { margin: 0; }
+.fiche > .badge { position: absolute; top: 3rem; right: 1.5rem; font-size: 1.3rem; padding: 0.15rem 0.7rem; border-width: 4px; }
+.fiche section { margin-top: 1rem; }
+@media (max-width: 600px) {
+  .fiche h1 { margin-right: 0; }
+  .fiche > .badge { position: static; margin-bottom: 0.5rem; }
+}
+
+/* ── Mes réservations : des talons de prêt ─────────────────── */
+.talons { list-style: none; padding: 0; display: grid; gap: 1rem; max-width: 620px; }
+.talons li {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem;
+  padding: 1rem 1.25rem 1rem 2.25rem;
+  background: radial-gradient(circle at 0 50%, var(--mur) 10px, transparent 11px), var(--etiquette);
+  border-left: 3px dashed var(--trou);
+}
+.talons li strong { font-stretch: 112%; }
+.talons li button { margin-left: auto; background: transparent; color: var(--encre-rouge); border-color: var(--encre-rouge); }

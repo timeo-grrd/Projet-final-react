@@ -16,6 +16,7 @@ export function AppLayout() {
     <>
       <header>
         <nav aria-label="Menu principal">
+          <strong className="enseigne">Campus Matériel</strong>
           {user ? (
             <>
               <NavLink to="/catalogue">Catalogue</NavLink>

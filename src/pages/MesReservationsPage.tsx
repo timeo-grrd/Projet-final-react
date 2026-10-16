@@ -16,14 +16,14 @@ export function MesReservationsPage() {
       {mesReservations.length === 0 ? (
         <p role="status">Vous n’avez aucune réservation en cours.</p>
       ) : (
-        <ul>
+        <ul className="talons">
           {mesReservations.map(r => {
             const equipement = equipements.find(e => e.id === r.equipementId);
             return (
               <li key={r.id}>
                 {equipement ? (
                   <>
-                    <strong>{equipement.nom}</strong> ({equipement.categorie}) -{' '}
+                    <strong>{equipement.nom}</strong> ({equipement.categorie})
                     <Link to={`/materiels/${r.equipementId}`}>Voir les détails</Link>
                     <button type="button" onClick={() => annuler(r.id, user.id)}>Annuler</button>
                   </>
