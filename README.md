@@ -2,7 +2,7 @@
 
 Projet final du module Framework JS. Application React qui permet aux étudiants de réserver du matériel du campus, et au responsable de gérer le catalogue.
 
-Stack : React 19, TypeScript, Vite, React Router 7 (mode Data avec `createBrowserRouter`).
+Stack : React 19, TypeScript, Vite, React Router 7.
 
 ## Lancer le projet
 
