@@ -233,3 +233,11 @@ nav :focus-visible { outline-color: var(--etiquette); }
 }
 .talons li strong { font-stretch: 112%; }
 .talons li button { margin-left: auto; background: transparent; color: var(--encre-rouge); border-color: var(--encre-rouge); }
+
+/* ── Petits écrans ─────────────────────────────────────────── */
+.carte-acces { flex: 1 1 150px; max-width: 220px; }
+@media (max-width: 600px) {
+  /* le tableau de gestion défile horizontalement au lieu d'élargir la page */
+  table { display: block; overflow-x: auto; }
+  nav { gap: 0.5rem 0.75rem; }
+}
