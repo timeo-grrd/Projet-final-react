@@ -34,9 +34,9 @@ export const CATEGORIES: Categorie[] = [
 ];
 
 export const COMPTES_INITIAUX: Compte[] = [
-  { id: 1, nom: 'Alice Martin', role: 'student' },
-  { id: 2, nom: 'Yanis Bernard', role: 'student' },
-  { id: 3, nom: 'Camille Dupont', role: 'manager' }
+  { id: 1, nom: 'Adam Thomas', role: 'student' },
+  { id: 2, nom: 'Yannick Sicaud', role: 'student' },
+  { id: 3, nom: 'Timéo Girard', role: 'manager' }
 ];
 
 // Chaque entrée représente un exemplaire physique distinct.
