@@ -1,6 +1,9 @@
 import { NavLink, Outlet } from 'react-router';
+import { useData } from '../context/DataContext';
 
 export function AppLayout() {
+  const { erreurStockage } = useData();
+
   return (
     <>
       <header>
@@ -11,6 +14,7 @@ export function AppLayout() {
         </nav>
       </header>
       <main>
+        {erreurStockage && <p role="alert">{erreurStockage}</p>}
         <Outlet />
       </main>
     </>
