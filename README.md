@@ -95,6 +95,7 @@ La disponibilité n'est jamais stockée : elle est **calculée** à partir des r
 - [x] Persistance des données et de la session ; la déconnexion supprime la session
 - [x] Communication entre composants : `FiltresCatalogue` → `CataloguePage`, `EquipementForm` → pages de création/modification
 - [x] Bonus : retour à la page demandée après connexion
+- [x] Interface thématique « réserve de matériel » : catalogue en panneau perforé, équipements en étiquettes d'inventaire, disponibilité en tampon, connexion par badges d'accès ; focus clavier visible et animation désactivée si l'utilisateur réduit les animations
 
 ## Limites connues
 
@@ -103,4 +104,5 @@ La disponibilité n'est jamais stockée : elle est **calculée** à partir des r
 - Pas de dates de réservation : un équipement reste réservé jusqu'à l'annulation (conforme au sujet).
 - La confirmation de suppression utilise la boîte de dialogue native `window.confirm`.
 - La page 404 est rendue par l'application ; le serveur ne renvoie pas un vrai code HTTP 404.
-- Interface volontairement sobre ; pas de tests automatisés.
+- Pas de tests automatisés.
+- La police Archivo est chargée depuis Google Fonts : sans connexion Internet, la police système prend le relais.
